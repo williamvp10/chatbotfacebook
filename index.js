@@ -90,9 +90,17 @@ app.post('/webhook/', function (req, res) {
 function sendTextMessage(sender, text) {
     if (text != 'null') {
         let messageData = {"attachment": {
-                "type": "audio",
-                "payload": {
-                    "url": "https://www.dropbox.com/s/s1pwmf71ynwdt2m/Track05.mp3?dl=0"
+                "type": "template",
+                "payload": {"template_type": "button",
+                    "text": "What would you like to do now?",
+                    "buttons": [
+                        {"type": "postback",
+                            "title": "Weather this weekend",
+                            "payload": "PAYLOAD_WEEKEND_LONDON"},
+                        {"type": "Goto Website",
+                            "url": "https://myweather.com/london",
+                            "title": "More Info"}
+                    ]
                 }
             }
         }
