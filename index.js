@@ -99,15 +99,15 @@ function sendTextMessage(sender, text) {
                         {
                             "title": "Classic T-Shirt Collection",
                             "subtitle": "See all our colors",
-                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                            "image_url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
                             "buttons": [
                                 {
                                     "title": "View",
                                     "type": "web_url",
-                                    "url": "https://peterssendreceiveapp.ngrok.io/collection",
+                                    "url": "https://www.google.com",
                                     "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
-                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                    "fallback_url": "https://www.google.com"
                                 }
                             ]
                         },
@@ -116,30 +116,30 @@ function sendTextMessage(sender, text) {
                             "subtitle": "See all our colors",
                             "default_action": {
                                 "type": "web_url",
-                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                                "url": "https://www.google.com",
                                 "messenger_extensions": false,
                                 "webview_height_ratio": "tall"
                             }
                         },
                         {
                             "title": "Classic Blue T-Shirt",
-                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                            "image_url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
                             "subtitle": "100% Cotton, 200% Comfortable",
                             "default_action": {
                                 "type": "web_url",
-                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                                "url": "https://www.google.com",
                                 "messenger_extensions": true,
                                 "webview_height_ratio": "tall",
-                                "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                "fallback_url": "https://www.google.com"
                             },
                             "buttons": [
                                 {
                                     "title": "Shop Now",
                                     "type": "web_url",
-                                    "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                                    "url": "https://www.google.com",
                                     "messenger_extensions": true,
                                     "webview_height_ratio": "tall",
-                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                    "fallback_url": "https://www.google.com"
                                 }
                             ]
                         }
