@@ -93,23 +93,62 @@ function sendTextMessage(sender, text) {
             "attachment": {
                 "type": "template",
                 "payload": {
-                    "template_type": "button",
-                    "text": "What do you want to do next?",
+                    "template_type": "list",
+                    "top_element_style": "compact",
+                    "elements": [
+                        {
+                            "title": "Classic T-Shirt Collection",
+                            "subtitle": "See all our colors",
+                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                            "buttons": [
+                                {
+                                    "title": "View",
+                                    "type": "web_url",
+                                    "url": "https://peterssendreceiveapp.ngrok.io/collection",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                }
+                            ]
+                        },
+                        {
+                            "title": "Classic White T-Shirt",
+                            "subtitle": "See all our colors",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                                "messenger_extensions": false,
+                                "webview_height_ratio": "tall"
+                            }
+                        },
+                        {
+                            "title": "Classic Blue T-Shirt",
+                            "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                            "subtitle": "100% Cotton, 200% Comfortable",
+                            "default_action": {
+                                "type": "web_url",
+                                "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                                "messenger_extensions": true,
+                                "webview_height_ratio": "tall",
+                                "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                            },
+                            "buttons": [
+                                {
+                                    "title": "Shop Now",
+                                    "type": "web_url",
+                                    "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                                    "messenger_extensions": true,
+                                    "webview_height_ratio": "tall",
+                                    "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                                }
+                            ]
+                        }
+                    ],
                     "buttons": [
                         {
-                            "type": "web_url",
-                            "url": "https://www.messenger.com",
-                            "title": "Visit Messenger"
-                        },
-                        {
+                            "title": "View More",
                             "type": "postback",
-                            "title": "Weather this weekend",
-                            "payload": "PAYLOAD_WEEKEND_LONDON"
-                        },
-                        {
-                            "type": "Goto Website",
-                            "url": "https://myweather.com/london",
-                            "title": "More Info"
+                            "payload": "payload"
                         }
                     ]
                 }
@@ -135,11 +174,39 @@ function sendTextMessage(sender, text) {
 }
 
 
-//envio de una imagen 
+//                              envio de una imagen 
 // let messageData = {"attachment": {
 //                "type": "image",
 //                "payload": {
 //                    "url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
+//                }
+//            }
+//        }
+
+//                                   botones
+//let messageData = {
+//            "attachment": {
+//                "type": "template",
+//                "payload": {
+//                    "template_type": "button",
+//                    "text": "What do you want to do next?",
+//                    "buttons": [
+//                        {
+//                            "type": "web_url",
+//                            "url": "https://www.messenger.com",
+//                            "title": "Visit Messenger"
+//                        },
+//                        {
+//                            "type": "postback",   //error en el tipo postback
+//                            "title": "Weather this weekend",
+//                            "payload": "PAYLOAD_WEEKEND_LONDON"
+//                        },
+//                        {
+//                            "type": "Goto Website",
+//                            "url": "https://myweather.com/london",
+//                            "title": "More Info"
+//                        }
+//                    ]
 //                }
 //            }
 //        }
