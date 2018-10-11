@@ -92,8 +92,7 @@ function sendTextMessage(sender, text) {
         let messageData = {"attachment": {
                 "type": "image",
                 "payload": {
-                    "url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
-                    "is_reusable": true
+                    "url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
                 }
             }
         }
@@ -115,3 +114,14 @@ function sendTextMessage(sender, text) {
         })
     }
 }
+
+
+//envio de una imagen 
+// let messageData = {"attachment": {
+//                "type": "image",
+//                "payload": {
+//                    "url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+//                    "is_reusable": true
+//                }
+//            }
+//        }
