@@ -90,20 +90,30 @@ app.post('/webhook/', function (req, res) {
 function sendTextMessage(sender, text) {
     if (text != 'null') {
         let messageData = {
-            "attachment":{
-      "type":"template",
-      "payload":{
-        "template_type":"button",
-        "text":"What do you want to do next?",
-        "buttons":[
-          {
-            "type":"web_url",
-            "url":"https://www.messenger.com",
-            "title":"Visit Messenger"
-          }
-        ]
-      }
-    }
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": "What do you want to do next?",
+                    "buttons": [
+                        {
+                            "type": "web_url",
+                            "url": "https://www.messenger.com",
+                            "title": "Visit Messenger"
+                        },
+                        {
+                            "type": "postback",
+                            "title": "Weather this weekend",
+                            "payload": "PAYLOAD_WEEKEND_LONDON"
+                        },
+                        {
+                            "type": "Goto Website",
+                            "url": "https://myweather.com/london",
+                            "title": "More Info"
+                        }
+                    ]
+                }
+            }
         }
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
