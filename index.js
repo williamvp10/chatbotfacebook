@@ -89,34 +89,14 @@ app.post('/webhook/', function (req, res) {
 
 function sendTextMessage(sender, text) {
     if (text != 'null') {
-        let messageData = {
-            "attachment": {
-                "type": "template",
+        let messageData = {"attachment": {
+                "type": "image",
                 "payload": {
-                    "template_type": "button",
-                    "text": "What do you want to do next?",
-                    "buttons": [
-                        {
-                            "type": "web_url",
-                            "url": "https://www.messenger.com",
-                            "title": "Visit Messenger"
-                        },
-                        {
-                            "type": "postback",   //error en el tipo postback
-                            "title": "Weather this weekend",
-                            "payload": "PAYLOAD_WEEKEND_LONDON"
-                        },
-                        {
-                            "type": "Goto Website",
-                            "url": "https://myweather.com/london",
-                            "title": "More Info"
-                        }
-                    ]
+                    "url": "https://www.google.com.co/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png"
                 }
             }
         }
 
-        
         request({
             url: 'https://graph.facebook.com/v2.6/me/messages',
             qs: {access_token: token},
