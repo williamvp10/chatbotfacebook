@@ -23,19 +23,6 @@ app.get('/', function (req, res) {
     res.send('Hello world, I am Weatherman!.')
 })
 
-// for Facebook verification
-app.get('/webhook/', function (req, res) {
-    if (req.query['hub.verify_token'] === 'iam-weatherman-bot') {
-        res.send(req.query['hub.challenge'])
-    }
-    res.send('Error, wrong token')
-})
-
-// Spin up the server
-app.listen(app.get('port'), function () {
-    console.log('running on port', app.get('port'))
-})
-
 app.post('/webhook/', function (req, res) {
     console.log(JSON.stringify(req.body));
     let messaging_events = req.body.entry[0].messaging;
@@ -43,7 +30,6 @@ app.post('/webhook/', function (req, res) {
 
         let event = req.body.entry[0].messaging[i];
         let sender = event.sender.id;
-        
         let recipient = event.recipient.id;
         let time = req.body.entry[0].time;
         let text = "";
@@ -66,6 +52,7 @@ app.post('/webhook/', function (req, res) {
                     sendTextMessage(sender, 'Error!');
                 }
             });
+
         } catch (err) {
             sendtextbot(event, sender);
         }
@@ -74,6 +61,7 @@ app.post('/webhook/', function (req, res) {
 
     res.sendStatus(200);
 });
+
 function sendtextbot(event, sender) {
     if (event.message && event.message.text) {
         let text = event.message.text;
@@ -96,7 +84,7 @@ function sendtextbot(event, sender) {
     }
 }
 function selectTypeBotMessage(sender, body) {
-// Print out the response body
+    // Print out the response body
     console.log(body);
     body = body.substring(1, body.length - 1);
     body = body.replace(/\\/g, '');
@@ -104,9 +92,9 @@ function selectTypeBotMessage(sender, body) {
     if (botOut.botUtterance !== null) {
         if (botOut.type !== null) {
             var ty = botOut.type;
-            var t1 = "hola";
+            var t1 = "saludo";
             var n1 = ty.localeCompare(t1);
-            var t2 = "adios";
+            var t2 = "bye";
             var n2 = ty.localeCompare(t2);
             if (n1 === 0) {
                 sendTextMessageType(sender, botOut);
@@ -167,3 +155,29 @@ function sendTextMessageType(sender, bot) {
         });
     }
 }
+
+
+function sendTextMessage(sender, text) {
+    if (text !== 'null') {
+
+        let messageData = {'text': text
+        };
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: token},
+            method: 'POST',
+            json: {
+                recipient: {id: sender},
+                message: messageData
+
+            }
+        }, function (error, response, body) {
+            if (error) {
+                console.log('Error sending messages: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+        });
+    }
+}
+
