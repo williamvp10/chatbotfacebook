@@ -43,7 +43,7 @@ app.post('/webhook/', function (req, res) {
 
         let event = req.body.entry[0].messaging[i];
         let sender = event.sender.id;
-        idusuario = sender;
+        
         let recipient = event.recipient.id;
         let time = req.body.entry[0].time;
         let text = "";
