@@ -116,7 +116,7 @@ function selectTypeBotMessage(sender, body) {
             } else if (n2 === 0) {
                 sendTextMessageType(sender, botOut);
             } else if (n3 === 0) {
-                sendTextMessageList(sender, botOut);
+                sendListText(sender,botOut);
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
@@ -130,7 +130,7 @@ function selectTypeBotMessage(sender, body) {
                     sendTextMessageType(sender, botOut);
                 }
             } else if (n5 === 0) {
-                sendTextMessageList(sender, botOut)
+                sendListText(sender,botOut);
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
@@ -300,4 +300,12 @@ function sendTextMessageList(sender, bot) {
             }
         });
     }
+}
+
+function sendListText(sender, bot) {
+    console.log(bot);
+    for (var i = 0; i < bot.elements.length; i++) {
+        sendTextMessage(sender,bot.elements[i].titulo); 
+    }
+
 }
