@@ -257,11 +257,11 @@ function sendTextMessageList(sender, bot) {
             elements += ',';
         }
         elements += '{';
-        elements += ' "title":"' + bot.elements[i].titulo + '"';
+        elements += '"title":"' + bot.elements[i].titulo + '"';
         var subtitulo = "";
         try {
             var subtitulo = bot.elements[i].titulo;
-            elements += ' ",subtitle":"' + subtitulo + '"';
+            elements += ',"subtitle":"' + subtitulo + '"';
         } catch (err) {
         }
         try {
@@ -269,22 +269,22 @@ function sendTextMessageList(sender, bot) {
             var n1 = bot.elements[i].url.localeCompare(t1);
             if (n1 !== 0) {
                 var url = bot.elements[i].url;
-                elements += ', "image_url":"' + url + '"';
+                elements += ',"image_url":"' + url + '"';
             }
         } catch (err) {
         }
         if (bot.elements[i].buttons.length>0){
-            elements += ', "buttons":[';
+            elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
-                elements += ' { ';
+                elements += '{';
                 elements += ' "type": "postback",';
                 elements += ' "title": "' + bot.elements[i].buttons[j].titulo + '",';
                 elements += ' "payload": "' + bot.elements[i].buttons[j].respuesta + '"';
-                elements += '  }  ';
+                elements += '}';
             }
-            elements += ' ]  ';
+            elements += ']';
         }
-        elements += ' }  ';
+        elements += '}';
     }
     elements += ']';
 
