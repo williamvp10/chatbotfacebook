@@ -116,7 +116,7 @@ function selectTypeBotMessage(sender, body) {
             } else if (n2 === 0) {
                 sendTextMessageType(sender, botOut);
             } else if (n3 === 0) {
-                sendTextMessageList(sender, botOut)
+                sendTextMessageList(sender, botOut);
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
@@ -225,6 +225,7 @@ function sendTextMessage(sender, text) {
 
 
 function sendTextMessageList(sender, bot) {
+    console.log(bot);
     let elements = '[';
     let cant = 0;
     if (bot.elements.length > 10) {
@@ -263,6 +264,7 @@ function sendTextMessageList(sender, bot) {
             elements += '  }  ';
         }
         elements += ' ]  ';
+        
         elements += ' }  ';
     }
     elements += ']';
