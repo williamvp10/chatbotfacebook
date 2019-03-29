@@ -111,12 +111,16 @@ function selectTypeBotMessage(sender, body) {
             var n5 = ty.localeCompare(t5);
             var t6 = "ayuda";
             var n6 = ty.localeCompare(t6);
+            var t7 = "EstadoActuador";
+            var n7 = ty.localeCompare(t7);
+            var t8 = "ModificarActuador";
+            var n8 = ty.localeCompare(t8);
             if (n1 === 0) {
                 sendTextMessage(sender, botOut.botUtterance);
             } else if (n2 === 0) {
                 sendTextMessageType(sender, botOut);
             } else if (n3 === 0) {
-                sendListText(sender,botOut);
+                sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
@@ -130,7 +134,7 @@ function selectTypeBotMessage(sender, body) {
                     sendTextMessageType(sender, botOut);
                 }
             } else if (n5 === 0) {
-                sendListText(sender,botOut);
+                sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
@@ -138,6 +142,20 @@ function selectTypeBotMessage(sender, body) {
                 }
             } else if (n6 === 0) {
                 sendTextMessage(sender, botOut.botUtterance);
+            } else if (n7 === 0) {
+                sendTextMessageList(sender, botOut)
+                if (botOut.buttons.length === 0) {
+                    sendTextMessage(sender, botOut.botUtterance);
+                } else {
+                    sendTextMessageType(sender, botOut);
+                }
+            } else if (n8 === 0) {
+                sendTextMessageList(sender, botOut)
+                if (botOut.buttons.length === 0) {
+                    sendTextMessage(sender, botOut.botUtterance);
+                } else {
+                    sendTextMessageType(sender, botOut);
+                }
             } else {
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
@@ -151,6 +169,7 @@ function selectTypeBotMessage(sender, body) {
         console.log(botOut.botUtterance);
     }
 }
+
 function sendTextMessageType(sender, bot) {
     let buttons = '[ ';
     for (var i = 0; i < bot.buttons.length; i++) {
@@ -264,7 +283,7 @@ function sendTextMessageList(sender, bot) {
             elements += '  }  ';
         }
         elements += ' ]  ';
-        
+
         elements += ' }  ';
     }
     elements += ']';
@@ -305,7 +324,7 @@ function sendTextMessageList(sender, bot) {
 function sendListText(sender, bot) {
     console.log(bot);
     for (var i = 0; i < bot.elements.length; i++) {
-        sendTextMessage(sender,bot.elements[i].titulo); 
+        sendTextMessage(sender, bot.elements[i].titulo);
     }
 
 }
