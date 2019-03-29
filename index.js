@@ -8,7 +8,6 @@ const token = "EAAghpqdArs0BABYz6RzM7dEV16ZC6HjNybYQAkKUrbiShFKpXx8wQtc1qhKpDVJc
 const msngerServerUrl = 'https://chatbotwilliam.herokuapp.com/bot';
 //global var
 
-var varIngredientes = "";
 app.set('port', (process.env.PORT || 5000));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -46,49 +45,21 @@ app.post('/webhook/', function (req, res) {
             var type = "" + req.body.entry[0].messaging[i].postback.payload;
             var type1 = type.split(":")[0];
             console.log(type);
-            var compareIngredientes = "add Ingredientes";
-            var compare2Ingredientes = "requestTiendas";
-            var compareresultIngredientes = compareIngredientes.localeCompare(type1);
-            var compareresult2Ingredientes = compare2Ingredientes.localeCompare(type1);
-            if (compareresultIngredientes === 0) {
-                if (varIngredientes.length > 0) {
-                    varIngredientes += ",";
+            request({
+                url: msngerServerUrl,
+                method: 'POST',
+                form: {
+                    'userType': type,
+                    'userUtterance': text
                 }
-                varIngredientes += type.split(":")[1];
-            } else if (compareresult2Ingredientes === 0) {
-                request({
-                    url: msngerServerUrl,
-                    method: 'POST',
-                    form: {
-                        'userType': type,
-                        'userUtterance': varIngredientes
-                    }
-                }, function (error, response, body) {
-                    //response is from the bot
-                    varIngredientes = "";
-                    if (!error && response.statusCode === 200) {
-                        selectTypeBotMessage(sender, body);
-                    } else {
-                        sendTextMessage(sender, 'Error!');
-                    }
-                });
-            } else {
-                request({
-                    url: msngerServerUrl,
-                    method: 'POST',
-                    form: {
-                        'userType': type,
-                        'userUtterance': text
-                    }
-                }, function (error, response, body) {
-                    //response is from the bot
-                    if (!error && response.statusCode === 200) {
-                        selectTypeBotMessage(sender, body);
-                    } else {
-                        sendTextMessage(sender, 'Error!');
-                    }
-                });
-            }
+            }, function (error, response, body) {
+                //response is from the bot
+                if (!error && response.statusCode === 200) {
+                    selectTypeBotMessage(sender, body);
+                } else {
+                    sendTextMessage(sender, 'Error!');
+                }
+            });
         } catch (err) {
             sendtextbot(event, sender);
         }
@@ -128,30 +99,22 @@ function selectTypeBotMessage(sender, body) {
     if (botOut.botUtterance !== null) {
         if (botOut.type !== null) {
             var ty = botOut.type;
-            var t1 = "Producto";
+            var t1 = "Saludo";
             var n1 = ty.localeCompare(t1);
-            var t2 = "Ingredientes";
+            var t2 = "MenuOpciones";
             var n2 = ty.localeCompare(t2);
-            var t3 = "Tiendas";
+            var t3 = "AllSensors";
             var n3 = ty.localeCompare(t3);
-            var t4 = "finalizar";
+            var t4 = "IDSensor";
             var n4 = ty.localeCompare(t4);
-            var t5 = "Resultados";
+            var t5 = "InfoSensor";
             var n5 = ty.localeCompare(t5);
+            var t6 = "ayuda";
+            var n6 = ty.localeCompare(t6);
             if (n1 === 0) {
-                sendTextMessageList(sender, botOut)
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
+                sendTextMessage(sender, botOut.botUtterance);
             } else if (n2 === 0) {
-                sendTextMessageList(sender, botOut)
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
+                sendTextMessageType(sender, botOut);
             } else if (n3 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
@@ -160,16 +123,21 @@ function selectTypeBotMessage(sender, body) {
                     sendTextMessageType(sender, botOut);
                 }
             } else if (n4 === 0) {
-                sendTextMessage(sender, botOut.botUtterance);
-            } else if (n5 === 0) {
-                sendTextMessage(sender, botOut.InformeProducto.text);
-                sendTextMessage(sender, botOut.InformeIngredientes.text);
-                sendTextMessage(sender, botOut.InformeTienda.text);
+                sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
                     sendTextMessageType(sender, botOut);
                 }
+            } else if (n5 === 0) {
+                sendTextMessageList(sender, botOut)
+                if (botOut.buttons.length === 0) {
+                    sendTextMessage(sender, botOut.botUtterance);
+                } else {
+                    sendTextMessageType(sender, botOut);
+                }
+            } else if (n6 === 0) {
+                sendTextMessage(sender, botOut.botUtterance);
             } else {
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
