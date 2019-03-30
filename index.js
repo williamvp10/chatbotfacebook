@@ -273,10 +273,10 @@ function sendTextMessageList(sender, bot) {
             }
         } catch (err) {
         }
-        console.log("elements: "+bot.elements[i]);
-        console.log("buttons: "+bot.elements[i].buttons);
-        console.log("tamaño: "+bot.elements[i].buttons.length);
-        console.log("tamaño: "+bot.elements[i].buttons[0]);
+        console.log("elements: "+JSON.parse(bot.elements[i]));
+        console.log("buttons: "+JSON.parse(bot.elements[i].buttons));
+        console.log("tamaño: "+JSON.parse(bot.elements[i].buttons).length);
+        console.log("tamaño: "+JSON.parse(bot.elements[i].buttons)[0]);
         if (bot.elements[i].buttons.length>0){
             elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
