@@ -273,6 +273,7 @@ function sendTextMessageList(sender, bot) {
             }
         } catch (err) {
         }
+        console.log("tamaño: "+bot.elements[i].buttons.length);
         if (bot.elements[i].buttons.length>0){
             elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
