@@ -243,8 +243,7 @@ function sendTextMessage(sender, text) {
 }
 
 
-function sendTextMessageList(sender, bot1) {
-    let bot=JSON.parse(bot1);
+function sendTextMessageList(sender, bot) {
     console.log(bot);
     let elements = '[';
     let cant = 0;
@@ -274,10 +273,6 @@ function sendTextMessageList(sender, bot1) {
             }
         } catch (err) {
         }
-        console.log("elements: "+JSON.parse(bot.elements[i]));
-        console.log("buttons: "+JSON.parse(bot.elements[i].buttons));
-        console.log("tamaño: "+JSON.parse(bot.elements[i].buttons).length);
-        console.log("tamaño: "+JSON.parse(bot.elements[i].buttons)[0]);
         if (bot.elements[i].buttons.length>0){
             elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
