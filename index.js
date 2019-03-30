@@ -275,6 +275,8 @@ function sendTextMessageList(sender, bot) {
         }
         console.log("elements: "+bot.elements[i]);
         console.log("buttons: "+bot.elements[i].buttons);
+        console.log("tamaño: "+bot.elements[i].buttons.length);
+        console.log("tamaño: "+bot.elements[i].buttons[0]);
         if (bot.elements[i].buttons.length>0){
             elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
