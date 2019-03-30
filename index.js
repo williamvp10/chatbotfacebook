@@ -260,7 +260,7 @@ function sendTextMessageList(sender, bot) {
         elements += '"title":"' + bot.elements[i].titulo + '"';
         var subtitulo = "";
         try {
-            var subtitulo = bot.elements[i].titulo;
+            var subtitulo = bot.elements[i].subtitulo;
             elements += ',"subtitle":"' + subtitulo + '"';
         } catch (err) {
         }
