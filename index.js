@@ -273,9 +273,9 @@ function sendTextMessageList(sender, bot) {
             }
         } catch (err) {
         }
-        let butt = JSON.parse(bot.elements[i].buttons);
-        console.log("tamaño: "+butt+" "+butt.length);
-        if (butt.length>0){
+        console.log("elements: "+bot.elements[i]);
+        console.log("buttons: "+bot.elements[i].buttons);
+        if (bot.elements[i].buttons.length>0){
             elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
                 elements += '{';
