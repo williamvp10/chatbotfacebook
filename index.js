@@ -243,7 +243,8 @@ function sendTextMessage(sender, text) {
 }
 
 
-function sendTextMessageList(sender, bot) {
+function sendTextMessageList(sender, bot1) {
+    let bot=JSON.parse(bot1);
     console.log(bot);
     let elements = '[';
     let cant = 0;
