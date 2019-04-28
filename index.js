@@ -123,7 +123,8 @@ function selectTypeBotMessage(sender, body) {
             if (n1 === 0) {
                 sendTextMessage(sender, botOut.botUtterance);
             } else if (n2 === 0) {
-                sendTextMessageType(sender, botOut);
+                sendTextMessageList(sender, botOut);
+                
             } else if (n3 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
