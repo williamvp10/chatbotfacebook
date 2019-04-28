@@ -90,6 +90,7 @@ function sendtextbot(event, sender) {
                 });
     }
 }
+
 function selectTypeBotMessage(sender, body) {
     // Print out the response body
     console.log(body);
@@ -105,20 +106,24 @@ function selectTypeBotMessage(sender, body) {
             var n2 = ty.localeCompare(t2);
             var t3 = "AllSensors";
             var n3 = ty.localeCompare(t3);
-            var t4 = "IDSensor";
+            var t4 = "IdSensor";
             var n4 = ty.localeCompare(t4);
             var t5 = "InfoSensor";
             var n5 = ty.localeCompare(t5);
-            var t6 = "ayuda";
+            var t6 = "EstadoActuador";
             var n6 = ty.localeCompare(t6);
-            var t7 = "EstadoActuador";
+            var t7 = "ModificarActuador";
             var n7 = ty.localeCompare(t7);
-            var t8 = "ModificarActuador";
+            var t8 = "agradecimiento";
             var n8 = ty.localeCompare(t8);
+            var t9 = "ModificarSensor";
+            var n9 = ty.localeCompare(t9);
+            var t10 = "IdSensor2";
+            var n10 = ty.localeCompare(t10);
             if (n1 === 0) {
                 sendTextMessage(sender, botOut.botUtterance);
             } else if (n2 === 0) {
-                sendTextMessageList(sender, botOut)
+                sendTextMessageType(sender, botOut);
             } else if (n3 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
@@ -141,7 +146,12 @@ function selectTypeBotMessage(sender, body) {
                     sendTextMessageType(sender, botOut);
                 }
             } else if (n6 === 0) {
-                sendTextMessage(sender, botOut.botUtterance);
+                sendTextMessageList(sender, botOut)
+                if (botOut.buttons.length === 0) {
+                    sendTextMessage(sender, botOut.botUtterance);
+                } else {
+                    sendTextMessageType(sender, botOut);
+                }
             } else if (n7 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
@@ -150,6 +160,15 @@ function selectTypeBotMessage(sender, body) {
                     sendTextMessageType(sender, botOut);
                 }
             } else if (n8 === 0) {
+                sendTextMessage(sender, botOut.botUtterance);
+            } else if (n9 === 0) {
+                sendTextMessageList(sender, botOut)
+                if (botOut.buttons.length === 0) {
+                    sendTextMessage(sender, botOut.botUtterance);
+                } else {
+                    sendTextMessageType(sender, botOut);
+                }
+            } else if (n10 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
@@ -266,7 +285,7 @@ function sendTextMessageList(sender, bot) {
                 var subtitulo = bot.elements[i].subtitulo;
                 elements += ',"subtitle":"' + subtitulo + '"';
             }
-           
+
         } catch (err) {
         }
         try {
@@ -278,7 +297,7 @@ function sendTextMessageList(sender, bot) {
             }
         } catch (err) {
         }
-        if (bot.elements[i].buttons.length>0){
+        if (bot.elements[i].buttons.length > 0) {
             elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
                 elements += '{';
