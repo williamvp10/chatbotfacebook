@@ -124,7 +124,7 @@ function selectTypeBotMessage(sender, body) {
                 sendTextMessage(sender, botOut.botUtterance);
             } else if (n2 === 0) {
                 sendTextMessageList(sender, botOut);
-                
+
             } else if (n3 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
@@ -320,7 +320,9 @@ function sendTextMessageList(sender, bot) {
             "attachment": {
                 "type": "template",
                 "payload": {
-                    "template_type": "generic",
+                    //"template_type": "generic",
+                    "template_type": "list",
+                    "top_element_style": "large",
                     "elements": arrayElements
                 }
             }
