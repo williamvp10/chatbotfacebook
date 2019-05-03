@@ -7,7 +7,7 @@ const app = express();
 const token = "EAAghpqdArs0BABYz6RzM7dEV16ZC6HjNybYQAkKUrbiShFKpXx8wQtc1qhKpDVJcZCeg8f8odRZCdpwQHu0jH0e1DykSnAwrj4SPOj4rsBWymTQabXBq7Uv1AgMSYr8iJ9iurogN2WCgJVyxTEkXVoqCsghQuVKXhZAYoipIIAZDZD";
 const msngerServerUrl = 'https://chatbotwilliam.herokuapp.com/bot';
 //global var
-
+var EstadoActuador = false;
 app.set('port', (process.env.PORT || 5000));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -40,10 +40,10 @@ app.post('/webhook/', function (req, res) {
         let recipient = event.recipient.id;
         let time = req.body.entry[0].time;
         let text = "";
-        try {
-            text = req.body.entry[0].messaging[i].postback.title;
-            var type = "" + req.body.entry[0].messaging[i].postback.payload;
-            var type1 = type.split(":")[0];
+        if (EstadoActuador) {
+            EstadoActuador = false;
+            text = event.message.text;
+            type = "requestModificarActuador";
             console.log(type);
             request({
                 url: msngerServerUrl,
@@ -60,10 +60,31 @@ app.post('/webhook/', function (req, res) {
                     sendTextMessage(sender, 'Error!');
                 }
             });
-        } catch (err) {
-            sendtextbot(event, sender);
+        } else {
+            try {
+                text = req.body.entry[0].messaging[i].postback.title;
+                var type = "" + req.body.entry[0].messaging[i].postback.payload;
+                var type1 = type.split(":")[0];
+                console.log(type);
+                request({
+                    url: msngerServerUrl,
+                    method: 'POST',
+                    form: {
+                        'userType': type,
+                        'userUtterance': text
+                    }
+                }, function (error, response, body) {
+                    //response is from the bot
+                    if (!error && response.statusCode === 200) {
+                        selectTypeBotMessage(sender, body);
+                    } else {
+                        sendTextMessage(sender, 'Error!');
+                    }
+                });
+            } catch (err) {
+                sendtextbot(event, sender);
+            }
         }
-
     }
 
     res.sendStatus(200);
@@ -120,11 +141,13 @@ function selectTypeBotMessage(sender, body) {
             var n9 = ty.localeCompare(t9);
             var t10 = "IdSensor2";
             var n10 = ty.localeCompare(t10);
+            var t11 = "PreguntaEstadoActuador";
+            var n11 = ty.localeCompare(t11);
             if (n1 === 0) {
                 sendTextMessage(sender, botOut.botUtterance);
             } else if (n2 === 0) {
                 sendTextMessageList(sender, botOut);
-                 
+
             } else if (n3 === 0) {
                 sendTextMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
@@ -176,6 +199,10 @@ function selectTypeBotMessage(sender, body) {
                 } else {
                     sendTextMessageType(sender, botOut);
                 }
+            } else if (n11 === 0) {
+                EstadoActuador = true;
+                sendTextMessage(sender, botOut.botUtterance);
+
             } else {
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
