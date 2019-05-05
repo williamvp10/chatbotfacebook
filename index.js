@@ -98,14 +98,14 @@ function InfoPersona(sender) {
         url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name&access_token=' + token,
         method: 'GET',
     }, function (error, response, body) {
-//        console.log(body);
-//        let u = '{';
-//        u += '"first_name": "'+body.first_name+'",';
-//        u += '"last_name": "' + body.last_name + '",';
-//        u += ' "profile_pic": "' + body.profile_pic+ '",';
-//         u += '"id": "' + body.id + '"';
-//        u += '}';
-        user = JSON.parse(body);
+       console.log(body);
+       let u = '{';
+        u += '"first_name": "'+body.first_name+'",';
+        u += '"last_name": "' + body.last_name + '",';
+//       u += ' "profile_pic": "' + body.profile_pic+ '",';
+         u += '"id": "' + body.id + '"';
+        u += '}';
+        user = JSON.parse(u);
         console.log(user);
     });
 
