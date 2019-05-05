@@ -99,13 +99,13 @@ function InfoPersona(sender) {
         method: 'GET',
     }, function (error, response, body) {
         console.log(body);
-        let u = '{';
-        u += '"first_name": "'+body.first_name+'",';
-        u += '"last_name": "' + body.last_name + '",';
-        u += ' "profile_pic": "' + body.profile_pic+ '",';
-         u += '"id": "' + body.id + '"';
-        u += '}';
-        user = JSON.parse(u);
+//        let u = '{';
+//        u += '"first_name": "'+body.first_name+'",';
+//        u += '"last_name": "' + body.last_name + '",';
+//        u += ' "profile_pic": "' + body.profile_pic+ '",';
+//         u += '"id": "' + body.id + '"';
+//        u += '}';
+        user = JSON.parse(body);
         console.log(user);
     });
 
