@@ -8,6 +8,7 @@ const token = "EAAghpqdArs0BABYz6RzM7dEV16ZC6HjNybYQAkKUrbiShFKpXx8wQtc1qhKpDVJc
 const msngerServerUrl = 'https://chatbotwilliam.herokuapp.com/bot';
 //global var
 var EstadoActuador = false;
+var users 
 app.set('port', (process.env.PORT || 5000));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,7 +33,7 @@ app.listen(app.get('port'), function () {
 });
 app.post('/webhook/', function (req, res) {
     console.log(JSON.stringify(req.body));
-    
+
     let messaging_events = req.body.entry[0].messaging;
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i];
@@ -50,6 +51,7 @@ app.post('/webhook/', function (req, res) {
                 url: msngerServerUrl,
                 method: 'POST',
                 form: {
+                    'userInfo': user,
                     'userType': type,
                     'userUtterance': text
                 }
@@ -65,12 +67,12 @@ app.post('/webhook/', function (req, res) {
             try {
                 text = req.body.entry[0].messaging[i].postback.title;
                 var type = "" + req.body.entry[0].messaging[i].postback.payload;
-                var type1 = type.split(":")[0];
                 console.log(type);
                 request({
                     url: msngerServerUrl,
                     method: 'POST',
                     form: {
+                        'userInfo': user,
                         'userType': type,
                         'userUtterance': text
                     }
@@ -92,17 +94,12 @@ app.post('/webhook/', function (req, res) {
 });
 
 function InfoPersona(sender) {
-
     request({
-        url: 'https://graph.facebook.com/'+sender+'?fields=first_name,last_name,profile_pic&access_token='+token,
+        url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name,profile_pic&access_token=' + token,
         method: 'GET',
     }, function (error, response, body) {
-        if (error) {
-            console.log('Error sending messages: ', error);
-        } else if (response.body.error) {
-            console.log('Error: ', response.body.error);
-        }
-        console.log(response);
+        user=JSON.parse(response);
+        console.log(user);
     });
 
 }
