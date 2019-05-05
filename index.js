@@ -98,12 +98,12 @@ function InfoPersona(sender) {
         url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name,profile_pic&access_token=' + token,
         method: 'GET',
     }, function (error, response, body) {
-        console.log(response);
+        console.log(body);
         let u = '{';
-        u += '"first_name": "'+response.first_name+'",';
-        u += '"last_name": "' + response.last_name + '",';
-        u += ' "profile_pic": "' + response.profile_pic+ '",';
-         u += '"id": "' + response.id + '"';
+        u += '"first_name": "'+body.first_name+'",';
+        u += '"last_name": "' + body.last_name + '",';
+        u += ' "profile_pic": "' + body.profile_pic+ '",';
+         u += '"id": "' + body.id + '"';
         u += '}';
         user = JSON.parse(u);
         console.log(user);
