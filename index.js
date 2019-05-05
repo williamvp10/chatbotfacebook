@@ -32,11 +32,12 @@ app.listen(app.get('port'), function () {
 });
 app.post('/webhook/', function (req, res) {
     console.log(JSON.stringify(req.body));
+    
     let messaging_events = req.body.entry[0].messaging;
     for (let i = 0; i < messaging_events.length; i++) {
-
         let event = req.body.entry[0].messaging[i];
         let sender = event.sender.id;
+        InfoPersona(sender);
         let recipient = event.recipient.id;
         let time = req.body.entry[0].time;
         let text = "";
@@ -89,6 +90,22 @@ app.post('/webhook/', function (req, res) {
 
     res.sendStatus(200);
 });
+
+function InfoPersona(sender) {
+
+    request({
+        url: 'https://graph.facebook.com/'+sender+'?fields=first_name,last_name,profile_pic&access_token='+token,
+        method: 'GET',
+    }, function (error, response, body) {
+        if (error) {
+            console.log('Error sending messages: ', error);
+        } else if (response.body.error) {
+            console.log('Error: ', response.body.error);
+        }
+        console.log(response);
+    });
+
+}
 
 function sendtextbot(event, sender) {
     if (event.message && event.message.text) {
