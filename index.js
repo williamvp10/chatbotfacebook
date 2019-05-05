@@ -95,10 +95,10 @@ app.post('/webhook/', function (req, res) {
 
 function InfoPersona(sender) {
     request({
-        url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name,profile_pic&access_token=' + token,
+        url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name&access_token=' + token,
         method: 'GET',
     }, function (error, response, body) {
-        console.log(body);
+//        console.log(body);
 //        let u = '{';
 //        u += '"first_name": "'+body.first_name+'",';
 //        u += '"last_name": "' + body.last_name + '",';
@@ -119,6 +119,7 @@ function sendtextbot(event, sender) {
             url: msngerServerUrl,
             method: 'POST',
             form: {
+                'userInfo': user,
                 'userUtterance': text
             }
         },
