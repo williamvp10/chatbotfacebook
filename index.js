@@ -50,7 +50,7 @@ app.post('/webhook/', function (req, res) {
             request({
                 url: msngerServerUrl,
                 method: 'POST',
-                form: {
+                json: {
                     'userInfo': user,
                     'userType': type,
                     'userUtterance': text
@@ -71,7 +71,7 @@ app.post('/webhook/', function (req, res) {
                 request({
                     url: msngerServerUrl,
                     method: 'POST',
-                    form: {
+                    json: {
                         'userInfo': user,
                         'userType': type,
                         'userUtterance': text
@@ -120,7 +120,7 @@ function sendtextbot(event, sender) {
         request({
             url: msngerServerUrl,
             method: 'POST',
-            form: {
+            json: {
                 'userInfo': user,
                 'userUtterance': text
             }
