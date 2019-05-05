@@ -50,8 +50,8 @@ app.post('/webhook/', function (req, res) {
             request({
                 url: msngerServerUrl,
                 method: 'POST',
-                json: {
-                    'userInfo': user,
+                form: {
+                    'userName': user.first_name,
                     'userType': type,
                     'userUtterance': text
                 }
@@ -71,8 +71,8 @@ app.post('/webhook/', function (req, res) {
                 request({
                     url: msngerServerUrl,
                     method: 'POST',
-                    json: {
-                        'userInfo': user,
+                    form: {
+                        'userName': user.first_name,
                         'userType': type,
                         'userUtterance': text
                     }
@@ -120,8 +120,8 @@ function sendtextbot(event, sender) {
         request({
             url: msngerServerUrl,
             method: 'POST',
-            json: {
-                'userInfo': user,
+            form: {
+                'userName': user.first_name,
                 'userUtterance': text
             }
         },
@@ -139,8 +139,8 @@ function sendtextbot(event, sender) {
 function selectTypeBotMessage(sender, body) {
     // Print out the response body
     console.log(body);
-    //body = body.substring(1, body.length - 1);
-    //body = body.replace(/\\/g, '');
+    body = body.substring(1, body.length - 1);
+    body = body.replace(/\\/g, '');
     let botOut = JSON.parse(body);
     if (botOut.botUtterance !== null) {
         if (botOut.type !== null) {
