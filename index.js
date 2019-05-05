@@ -8,7 +8,7 @@ const token = "EAAghpqdArs0BABYz6RzM7dEV16ZC6HjNybYQAkKUrbiShFKpXx8wQtc1qhKpDVJc
 const msngerServerUrl = 'https://chatbotwilliam.herokuapp.com/bot';
 //global var
 var EstadoActuador = false;
-var users 
+var users
 app.set('port', (process.env.PORT || 5000));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
@@ -98,7 +98,14 @@ function InfoPersona(sender) {
         url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name,profile_pic&access_token=' + token,
         method: 'GET',
     }, function (error, response, body) {
-        user=JSON.parse(response);
+        console.log(response);
+        let u = '{';
+        u += '"first_name": "'+response.first_name+'",';
+        u += '"last_name": "' + response.last_name + '",';
+        u += ' "profile_pic": "' + response.profile_pic+ '",';
+         u += '"id": "' + response.id + '"';
+        u += '}';
+        user = JSON.parse(u);
         console.log(user);
     });
 
