@@ -8,7 +8,7 @@ const token = "EAAghpqdArs0BABYz6RzM7dEV16ZC6HjNybYQAkKUrbiShFKpXx8wQtc1qhKpDVJc
 const msngerServerUrl = 'https://chatbotwilliam.herokuapp.com/bot';
 //global var
 var EstadoActuador = false;
-var users
+var user;
 app.set('port', (process.env.PORT || 5000));
 // Process application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: false}));
