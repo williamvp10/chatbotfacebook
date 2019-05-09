@@ -260,6 +260,52 @@ function selectTypeBotMessage(sender, body) {
     }
 }
 
+function sendTextMessageType(sender, bot) {
+    let buttons = '[ ';
+    for (var i = 0; i < bot.buttons.length; i++) {
+        if (i !== 0) {
+            buttons += ',';
+        }
+        buttons += '{';
+        buttons += '"type": "postback",';
+        buttons += '"title": "' + bot.buttons[i].titulo + '",';
+        buttons += ' "payload": "' + bot.buttons[i].respuesta + '"';
+        buttons += '}';
+    }
+    buttons += ']';
+    console.log(buttons);
+    let b = JSON.parse(buttons);
+    if (bot !== 'null') {
+        let messageData = {
+            "attachment": {
+                "type": "template",
+                "payload": {
+                    "template_type": "button",
+                    "text": bot.botUtterance,
+                    "buttons": b
+                }
+            }
+        };
+        console.log(messageData);
+        // Start the request
+        request({
+            url: 'https://graph.facebook.com/v2.6/me/messages',
+            qs: {access_token: token},
+            method: 'POST',
+            json: {
+                recipient: {id: sender},
+                message: messageData
+
+            }
+        }, function (error, response, body) {
+            if (error) {
+                console.log('Error sending messages: ', error);
+            } else if (response.body.error) {
+                console.log('Error: ', response.body.error);
+            }
+        });
+    }
+}
 function sendTextMessage(sender, text) {
     if (text !== 'null') {
 
