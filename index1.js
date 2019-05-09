@@ -361,16 +361,17 @@ function sendTextMessageList(sender, bot) {
             }
         } catch (err) {
         }
-
-        elements += ' "buttons":[';
-        for (var j = 0; j < bot.elements[i].buttons.length; j++) {
-            elements += ' { ';
-            elements += ' "type": "postback",';
-            elements += ' "title": "' + bot.elements[i].buttons[j].titulo + '",';
-            elements += ' "payload": "' + bot.elements[i].buttons[j].respuesta + '"';
-            elements += '  }  ';
+        if (bot.elements[i].buttons.length > 0) {
+            elements += ' "buttons":[';
+            for (var j = 0; j < bot.elements[i].buttons.length; j++) {
+                elements += ' { ';
+                elements += ' "type": "postback",';
+                elements += ' "title": "' + bot.elements[i].buttons[j].titulo + '",';
+                elements += ' "payload": "' + bot.elements[i].buttons[j].respuesta + '"';
+                elements += '  }  ';
+            }
+            elements += ' ]  ';
         }
-        elements += ' ]  ';
         elements += ' }  ';
     }
     elements += ']';
