@@ -259,53 +259,6 @@ function selectTypeBotMessage(sender, body) {
         console.log(botOut.botUtterance);
     }
 }
-function sendTextMessageType(sender, bot) {
-    let buttons = '[ ';
-    for (var i = 0; i < bot.buttons.length; i++) {
-        if (i !== 0) {
-            buttons += ',';
-        }
-        buttons += '{';
-        buttons += '"type": "postback",';
-        buttons += '"title": "' + bot.buttons[i].titulo + '",';
-        buttons += ' "payload": "' + bot.buttons[i].respuesta + '"';
-        buttons += '}';
-    }
-    buttons += ']';
-    console.log(buttons);
-    let b = JSON.parse(buttons);
-    if (bot !== 'null') {
-        let messageData = {
-            "attachment": {
-                "type": "template",
-                "payload": {
-                    "template_type": "button",
-                    "text": bot.botUtterance,
-                    "buttons": b
-                }
-            }
-        };
-        console.log(messageData);
-        // Start the request
-        request({
-            url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: {access_token: token},
-            method: 'POST',
-            json: {
-                recipient: {id: sender},
-                message: messageData
-
-            }
-        }, function (error, response, body) {
-            if (error) {
-                console.log('Error sending messages: ', error);
-            } else if (response.body.error) {
-                console.log('Error: ', response.body.error);
-            }
-        });
-    }
-}
-
 
 function sendTextMessage(sender, text) {
     if (text !== 'null') {
@@ -333,6 +286,7 @@ function sendTextMessage(sender, text) {
 
 
 function sendTextMessageList(sender, bot) {
+    console.log(bot);
     let elements = '[';
     let cant = 0;
     if (bot.elements.length > 10) {
@@ -345,11 +299,16 @@ function sendTextMessageList(sender, bot) {
             elements += ',';
         }
         elements += '{';
-        elements += ' "title":"' + bot.elements[i].titulo + '",';
+        elements += '"title":"' + bot.elements[i].titulo + '"';
         var subtitulo = "";
         try {
-            var subtitulo = bot.elements[i].titulo;
-            elements += ' "subtitle":"' + subtitulo + '",';
+            var t1 = "undefined";
+            var n1 = bot.elements[i].subtitulo.localeCompare(t1);
+            if (n1 !== 0) {
+                var subtitulo = bot.elements[i].subtitulo;
+                elements += ',"subtitle":"' + subtitulo + '"';
+            }
+
         } catch (err) {
         }
         try {
@@ -357,22 +316,22 @@ function sendTextMessageList(sender, bot) {
             var n1 = bot.elements[i].url.localeCompare(t1);
             if (n1 !== 0) {
                 var url = bot.elements[i].url;
-                elements += ' "image_url":"' + url + '",';
+                elements += ',"image_url":"' + url + '"';
             }
         } catch (err) {
         }
         if (bot.elements[i].buttons.length > 0) {
-            elements += ' "buttons":[';
+            elements += ',"buttons":[';
             for (var j = 0; j < bot.elements[i].buttons.length; j++) {
-                elements += ' { ';
+                elements += '{';
                 elements += ' "type": "postback",';
                 elements += ' "title": "' + bot.elements[i].buttons[j].titulo + '",';
                 elements += ' "payload": "' + bot.elements[i].buttons[j].respuesta + '"';
-                elements += '  }  ';
+                elements += '}';
             }
-            elements += ' ]  ';
+            elements += ']';
         }
-        elements += ' }  ';
+        elements += '}';
     }
     elements += ']';
 
@@ -407,4 +366,12 @@ function sendTextMessageList(sender, bot) {
             }
         });
     }
+}
+
+function sendListText(sender, bot) {
+    console.log(bot);
+    for (var i = 0; i < bot.elements.length; i++) {
+        sendTextMessage(sender, bot.elements[i].titulo);
+    }
+
 }
