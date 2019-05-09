@@ -175,7 +175,11 @@ function selectTypeBotMessage(sender, body) {
             var t13 = "IdSensor4";
             var n13 = ty.localeCompare(t13);
             if (n1 === 0) {
-                sendTextMessageType(sender, botOut);
+                if (botOut.buttons.length === 0) {
+                    sendTextMessage(sender, botOut.botUtterance);
+                } else {
+                    sendTextMessageType(sender, botOut);
+                }
             } else if (n2 === 0) {
                 sendTextMessageList(sender, botOut);
             } else if (n3 === 0) {
