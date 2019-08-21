@@ -32,6 +32,10 @@ app.listen(app.get('port'), function () {
     console.log('running on port', app.get('port'));
 });
 app.post('/webhook/', function (req, res) {
+    var intent = 0;
+    sendtoBot(req, res, intent);
+});
+function sendtoBot(req, res, numintent) {
     console.log(JSON.stringify(req.body));
 
     let messaging_events = req.body.entry[0].messaging;
@@ -59,8 +63,14 @@ app.post('/webhook/', function (req, res) {
                 //response is from the bot
                 if (!error && response.statusCode === 200) {
                     selectTypeBotMessage(sender, body);
+                } else if (!error && numintent < 10) {
+                    console.log("intent" + numintent);
+                    console.log("response" + JSON.stringify(response));
+                    console.log("re send- " + body);
+                    numintent++;
+                    sendtoBot(req, res, numintent);
                 } else {
-                    sendTextMessage(sender, 'Error!');
+                    sendTextMessage(sender, 'no te puedo ayudar con tu solicitud');
                 }
             });
         } else {
@@ -80,32 +90,37 @@ app.post('/webhook/', function (req, res) {
                     //response is from the bot
                     if (!error && response.statusCode === 200) {
                         selectTypeBotMessage(sender, body);
+                    } else if (!error && numintent < 10) {
+                        console.log("intent" + numintent);
+                        console.log("response" + JSON.stringify(response));
+                        console.log("re send- " + body);
+                        numintent++;
+                        sendtoBot(req, res, numintent);
                     } else {
-                        sendTextMessage(sender, 'Error!');
+                        sendTextMessage(sender, 'no te puedo ayudar con tu solicitud');
                     }
                 });
             } catch (err) {
-                sendtextbot(event, sender);
+                sendtextbot(event, sender, numintent);
             }
         }
     }
 
     res.sendStatus(200);
-});
-
+}
 function InfoPersona(sender) {
     request({
         url: 'https://graph.facebook.com/' + sender + '?fields=first_name,last_name&access_token=' + token,
         method: 'GET',
     }, function (error, response, body) {
-       console.log(body);
-       var infou = JSON.parse(body);
-       console.log(infou);
-       let u = '{';
-        u += '"first_name": "'+infou.first_name+'",';
+        console.log(body);
+        var infou = JSON.parse(body);
+        console.log(infou);
+        let u = '{';
+        u += '"first_name": "' + infou.first_name + '",';
         u += '"last_name": "' + infou.last_name + '",';
 //       u += ' "profile_pic": "' + body.profile_pic+ '",';
-         u += '"id": "' + infou.id + '"';
+        u += '"id": "' + infou.id + '"';
         u += '}';
         user = JSON.parse(u);
         console.log(user);
@@ -113,7 +128,7 @@ function InfoPersona(sender) {
 
 }
 
-function sendtextbot(event, sender) {
+function sendtextbot(event, sender, numintent) {
     if (event.message && event.message.text) {
         let text = event.message.text;
         //send it to the bot
@@ -121,7 +136,7 @@ function sendtextbot(event, sender) {
             url: msngerServerUrl,
             method: 'POST',
             form: {
-                'userName': user.first_name,
+                'userId': sender,
                 'userUtterance': text
             }
         },
@@ -129,8 +144,14 @@ function sendtextbot(event, sender) {
                     //response is from the bot
                     if (!error && response.statusCode === 200) {
                         selectTypeBotMessage(sender, body);
+                    } else if (!error && numintent < 10) {
+                        console.log("intent" + numintent);
+                        console.log("response" + JSON.stringify(response));
+                        console.log("re send- " + body);
+                        numintent++;
+                        sendtextbot(event, sender, numintent);
                     } else {
-                        sendTextMessage(sender, 'Error!');
+                        sendTextMessage(sender, 'no te puedo ayudar con tu solicitud');
                     }
                 });
     }
