@@ -195,8 +195,8 @@ function selectTypeBotMessage(sender, body) {
                     sendUserPostback(sender, botOut);
                 }
             } else if (n3 === 0) { //resumen 
-                sendTextMessageConfirm(sender, botOut)
-                sendButtonsConfirm(sender)
+                //sendTextMessageConfirm(sender, botOut)
+                //sendButtonsConfirm(sender)
             }  else if (n4 === 0) { // do nothing
                 console.log(botOut.botUtterance)
             } else if (n5 === 0) { //imagen
@@ -287,7 +287,7 @@ function sendTextMessage(sender, text) {
 }
 
 
-function sendTextMessageList(sender, bot) {
+function sendMessageList(sender, bot) {
     console.log(bot);
     let elements = '[';
     let cant = 0;
