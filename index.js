@@ -166,103 +166,55 @@ function selectTypeBotMessage(sender, body) {
     if (botOut.botUtterance !== null) {
         if (botOut.type !== null) {
             var ty = botOut.type;
-            var t1 = "Saludo";
+            var t1 = "texto";
+            var t2 = "lista";
+            var t3 = "resumen";
+            var t4 = "nada";
+            var t5 = "imagen";
+            //var t6 = "video";
+            //var t7 = "documento";
+            //var t8 = "informe";
             var n1 = ty.localeCompare(t1);
-            var t2 = "MenuOpciones";
             var n2 = ty.localeCompare(t2);
-            var t3 = "AllSensors";
             var n3 = ty.localeCompare(t3);
-            var t4 = "IdSensor";
             var n4 = ty.localeCompare(t4);
-            var t5 = "InfoSensor";
             var n5 = ty.localeCompare(t5);
-            var t6 = "EstadoActuador";
-            var n6 = ty.localeCompare(t6);
-            var t7 = "ModificarActuador";
-            var n7 = ty.localeCompare(t7);
-            var t8 = "agradecimiento";
-            var n8 = ty.localeCompare(t8);
-            var t9 = "ModificarSensor";
-            var n9 = ty.localeCompare(t9);
-            var t10 = "IdSensor2";
-            var n10 = ty.localeCompare(t10);
-            var t11 = "PreguntaEstadoActuador";
-            var n11 = ty.localeCompare(t11);
-            if (n1 === 0) {
-                sendTextMessage(sender, botOut.botUtterance);
-            } else if (n2 === 0) {
-                sendTextMessageList(sender, botOut);
-
-            } else if (n3 === 0) {
-                sendTextMessageList(sender, botOut)
+            //var n6 = ty.localeCompare(t6);
+            //var n7 = ty.localeCompare(t7);
+            if (n1 === 0) { //texto
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
-                    sendTextMessageType(sender, botOut);
+                    sendUserPostback(sender, botOut);
                 }
-            } else if (n4 === 0) {
-                sendTextMessageList(sender, botOut)
+            } else if (n2 === 0) { //lista
+                sendMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
-                    sendTextMessageType(sender, botOut);
+                    sendUserPostback(sender, botOut);
                 }
-            } else if (n5 === 0) {
-                sendTextMessageList(sender, botOut)
+            } else if (n3 === 0) { //resumen 
+                sendTextMessageConfirm(sender, botOut)
+                sendButtonsConfirm(sender)
+            }  else if (n4 === 0) { // do nothing
+                console.log(botOut.botUtterance)
+            } else if (n5 === 0) { //imagen
+                sendMessageList(sender, botOut)
                 if (botOut.buttons.length === 0) {
                     sendTextMessage(sender, botOut.botUtterance);
                 } else {
-                    sendTextMessageType(sender, botOut);
+                    sendUserPostback(sender, botOut);
                 }
-            } else if (n6 === 0) {
-                sendTextMessageList(sender, botOut)
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
-            } else if (n7 === 0) {
-                sendTextMessageList(sender, botOut)
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
-            } else if (n8 === 0) {
-                sendTextMessage(sender, botOut.botUtterance);
-            } else if (n9 === 0) {
-                sendTextMessageList(sender, botOut)
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
-            } else if (n10 === 0) {
-                sendTextMessageList(sender, botOut)
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
-            } else if (n11 === 0) {
-                EstadoActuador = true;
-                sendTextMessage(sender, botOut.botUtterance);
-
             } else {
-                if (botOut.buttons.length === 0) {
-                    sendTextMessage(sender, botOut.botUtterance);
-                } else {
-                    sendTextMessageType(sender, botOut);
-                }
+                sendTextMessage(sender, "disculpa no puedo responder a tu solicitud");
             }
-
-
         }
         console.log(botOut.botUtterance);
     }
 }
 
-function sendTextMessageType(sender, bot) {
+function sendUserPostback(sender, bot) {
     let buttons = '[ ';
     for (var i = 0; i < bot.buttons.length; i++) {
         if (i !== 0) {
